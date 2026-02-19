@@ -127,6 +127,7 @@ class DataTransformation:
                     transformed_train_filepath=None,
                     transformed_test_filepath=None 
                 )
+                return data_transformation_artifact
         
         except Exception as e:
             raise NetworkSecurityException(e, sys)

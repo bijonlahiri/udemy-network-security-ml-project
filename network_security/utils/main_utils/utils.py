@@ -37,12 +37,33 @@ def save_numpy_array_data(filepath: str, array: np.array) -> None:
     except Exception as e:
         raise NetworkSecurityException(e, sys)
 
-def save_object(filepath: str, object: object) -> None:
+def save_object(filepath: str, obj: object) -> None:
     try:
         dir_path = os.path.dirname(filepath)
         os.makedirs(dir_path, exist_ok=True)
         with open(filepath, 'wb') as file:
-            pickle.dump(object, file)
+            pickle.dump(obj, file)
         logging.info('Saved object to file')
+    except Exception as e:
+        raise NetworkSecurityException(e, sys)
+
+def load_object(filepath: str)->object:
+    try:
+        if not os.path.exists(filepath):
+            raise Exception(f'Object filepath {filepath} does not exist.')
+        with open(filepath, 'rb') as object_file:
+            return pickle.load(object_file)
+    except Exception as e:
+        raise NetworkSecurityException(e, sys)
+
+def load_numpy_array_data(filepath: str)->np.array:
+    """
+    Load numpy array data from file
+    """
+    try:
+        if not os.path.exists(filepath):
+            raise Exception(f'Numpy array file {filepath} does not exist.')
+        with open(filepath, 'rb') as numpy_file:
+            return np.load(numpy_file)
     except Exception as e:
         raise NetworkSecurityException(e, sys)
